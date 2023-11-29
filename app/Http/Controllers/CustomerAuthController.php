@@ -40,8 +40,9 @@ class CustomerAuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed
-            return response()->json(['message' => 'Login successful']);
+            $customer = Auth::user();
+
+        return response()->json(['message' => 'Login successful', 'customer_name' => $customer->name]);
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);
